@@ -13,7 +13,5 @@ if (! is_array($config)) {
     echo 'Config file is missing or invalid !';
     exit(1);
 }
-WdesAdmin::init($config);
 
-Session::set('time', time());
-Session::destroy();
+WdesAdmin::init($config);

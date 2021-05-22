@@ -43,6 +43,16 @@ class Session
         self::$storage[$key] = $value;
     }
 
+    /**
+     * Get a session key
+     * @param mixed $default The default value
+     * @return mixed
+     */
+    public static function get(string $key, $default = null)
+    {
+        return self::$storage[$key] ?? $default;
+    }
+
     public static function destroy(): void
     {
         // Clean the data just in case

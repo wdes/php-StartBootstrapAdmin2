@@ -62,4 +62,9 @@ class WdesAdmin
         Session::setStorage($_SESSION);
     }
 
+    public static function deinit(): void
+    {
+        Session::close();// Session depends on db
+        Database::getInstance()->disconnect();
+    }
 }

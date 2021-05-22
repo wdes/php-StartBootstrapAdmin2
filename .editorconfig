@@ -9,3 +9,9 @@ insert_final_newline = true
 
 [Makefile]
 indent_style = tab
+
+[public/*.php]
+insert_final_newline = false
+
+[src/templates/*.php]
+insert_final_newline = false
