@@ -10,4 +10,5 @@ return [
     '/' => [HomeController::class, 'index'],
     '/404' => [ErrorController::class, 'error404'],
     '/login' => [AuthController::class, 'login'],
+    '/register' => [AuthController::class, 'register'],
 ];

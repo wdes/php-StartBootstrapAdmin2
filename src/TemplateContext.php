@@ -43,4 +43,9 @@ class TemplateContext
     {
         echo htmlspecialchars($this->data[$key] ?? '', ENT_COMPAT | ENT_HTML5);
     }
+
+    public function checked(string $key): void
+    {
+        echo ($this->data[$key] ?? '') === 'true' ? 'checked' : '';
+    }
 }

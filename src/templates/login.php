@@ -2,7 +2,7 @@
 <body class="bg-gradient-primary">
 
     <div class="container">
-
+    <?php $this->render('errors'); ?>
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
@@ -39,9 +39,17 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
+                                                <input
+                                                    type="checkbox"
+                                                    class="custom-control-input"
+                                                    id="rememberCheck"
+                                                    name="remember_me"
+                                                    value="true"
+                                                    <?php $this->checked('remember_me'); ?>
+                                                >
+                                                <label
+                                                    class="custom-control-label"
+                                                    for="rememberCheck">Remember Me</label>
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
