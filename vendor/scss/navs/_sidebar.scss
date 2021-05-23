@@ -248,7 +248,7 @@
                     }
 
                     &.collapsed::after {
-                        content: '\f105';
+                        content: mdi('chevron-right');
                     }
                 }
             }
