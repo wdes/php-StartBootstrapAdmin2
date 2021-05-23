@@ -8,6 +8,7 @@ return [
     // AND PASSWORDS WILL NOT WORK ANYMORE AND NEED A RESET
     'secretKey' => 'R*KhN9Z#kpzziVZXp^aiM3C9q86mEpYj3GsH8jr@HdViDxzM76DEq',// Fill this value with a long random string
     'sessionName' => 'admin-1',// Keep it simple, this allows easy multi sites on the same host
+    'siteName' => 'WdesAdmin',// Will display on the left bar
     'database' => [
         'production' => [
             'adapter' => 'mysql',

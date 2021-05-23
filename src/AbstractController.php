@@ -27,6 +27,11 @@ abstract class AbstractController
         $this->response->addContents($html);
     }
 
+    public function redirect(string $route): void
+    {
+        $this->response->addHeader('Location', 'index.php?route=' . $route);
+    }
+
     public function authorized(): bool
     {
         return Session::get('logged_in', false) === true;

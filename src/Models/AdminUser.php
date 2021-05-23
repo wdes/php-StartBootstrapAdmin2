@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace examples;
+namespace WdesAdmin\Models;
 
-use SimplePhpModelSystem\AbstractModel;
+use WdesAdmin\AbstractModel;
 
 class AdminUser extends AbstractModel
 {
@@ -20,12 +20,16 @@ class AdminUser extends AbstractModel
 
     public static function create(
         string $username,
+        ?string $firstName,
+        ?string $lastName,
         string $password
     ): self {
         $instance = new static();
         $instance->setData(
             [
                 'username' => $username,
+                'first_name' => $firstName,
+                'last_name' => $lastName,
                 'password' => $password
             ]
         );
@@ -43,5 +47,24 @@ class AdminUser extends AbstractModel
         );
     }
 
+    public function getUsername(): string
+    {
+        return $this->data['username'];
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->data['first_name'];
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->data['last_name'];
+    }
+
+    public function getPassword(): string
+    {
+        return $this->data['password'];
+    }
 
 }

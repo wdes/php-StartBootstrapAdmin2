@@ -1,6 +1,5 @@
 <?php
 
-use WdesAdmin\Session;
 use WdesAdmin\WdesAdmin;
 
 // Load the class auto-loader
@@ -15,3 +14,4 @@ if (! is_array($config)) {
 }
 
 WdesAdmin::init($config);
+unset($config);// Do not let the variable be accessed further

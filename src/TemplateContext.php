@@ -39,13 +39,43 @@ class TemplateContext
         var_dump($this->data);
     }
 
+    public function secure(string $value): string
+    {
+        return htmlspecialchars($value, ENT_COMPAT | ENT_HTML5);
+    }
+
     public function value(string $key): void
     {
-        echo htmlspecialchars($this->data[$key] ?? '', ENT_COMPAT | ENT_HTML5);
+        echo $this->secure($this->data[$key] ?? '');
     }
 
     public function checked(string $key): void
     {
         echo ($this->data[$key] ?? '') === 'true' ? 'checked' : '';
+    }
+
+    public function getFlashMessages(): array
+    {
+        $messages = Flash::getMessages();
+        Flash::clear();// Empty them
+        return $messages;
+    }
+
+    public function getUserDisplayName(): string
+    {
+        $user = Session::get('user', []);
+        $displayName = $user['first_name'] ?? '';
+        $displayName .= ' ';
+        $displayName .= $user['last_name'] ?? '';
+        if (empty(trim($displayName, ' '))) {
+            $displayName = $user['username'] ?? '__INVALID__';
+        }
+
+        return $displayName;
+    }
+
+    public function getSiteName(): string
+    {
+        return WdesAdmin::getSiteName();
     }
 }

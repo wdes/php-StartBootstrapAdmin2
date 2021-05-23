@@ -19,15 +19,27 @@ namespace WdesAdmin;
 class Response
 {
     /** @var string */
-    private $contents;
+    private $contents = '';
+
+    /** @var array<int,array<string,string>> */
+    private $headers = [];
 
     public function send(): void
     {
+        foreach ($this->headers as $header) {
+            [$headerName, $headerValue] = $header;
+            header($headerName . ': ' . $headerValue);
+        }
         echo $this->contents;
     }
 
     public function addContents(string $contents): void
     {
         $this->contents .= $contents;
+    }
+
+    public function addHeader(string $name, string $contents): void
+    {
+        $this->headers[] = [$name, $contents];
     }
 }

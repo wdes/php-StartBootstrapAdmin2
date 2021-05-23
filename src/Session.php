@@ -44,6 +44,18 @@ class Session
     }
 
     /**
+     * Push a value into a session key
+     * @param mixed $value
+     */
+    public static function push(string $key, $value): void
+    {
+        if (! isset(self::$storage[$key])) {
+            self::$storage[$key] = [];
+        }
+        self::$storage[$key][] = $value;
+    }
+
+    /**
      * Get a session key
      * @param mixed $default The default value
      * @return mixed

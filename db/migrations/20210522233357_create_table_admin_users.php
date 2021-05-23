@@ -31,7 +31,7 @@ final class CreateTableAdminUsers extends AbstractMigration
                 'string',
                 [
                     'comment' => 'The password',
-                    'limit' => 255,
+                    'limit' => 500,
                 ]
             )
             ->addColumn(

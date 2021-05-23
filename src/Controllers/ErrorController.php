@@ -29,4 +29,10 @@ class ErrorController extends AbstractController
         $this->addHtml(Template::render('404'));
         return $this->response;
     }
+
+    public function error405(): Response
+    {
+        $this->addHtml(Template::render('405'));
+        return $this->response;
+    }
 }

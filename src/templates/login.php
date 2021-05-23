@@ -26,6 +26,7 @@
                                                 name="username"
                                                 placeholder="Username"
                                                 value="<?php $this->value('username'); ?>"
+                                                autocomplete="nickname"
                                             >
                                         </div>
                                         <div class="form-group">
@@ -35,22 +36,8 @@
                                                 name="password"
                                                 placeholder="Password"
                                                 value="<?php $this->value('password'); ?>"
+                                                autocomplete="current-password"
                                             >
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input
-                                                    type="checkbox"
-                                                    class="custom-control-input"
-                                                    id="rememberCheck"
-                                                    name="remember_me"
-                                                    value="true"
-                                                    <?php $this->checked('remember_me'); ?>
-                                                >
-                                                <label
-                                                    class="custom-control-label"
-                                                    for="rememberCheck">Remember Me</label>
-                                            </div>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Login

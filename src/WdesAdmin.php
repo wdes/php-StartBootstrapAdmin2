@@ -21,6 +21,12 @@ use SessionHandler;
  */
 class WdesAdmin
 {
+    /** @var string */
+    private static $secretKey;
+
+    /** @var string */
+    private static $siteName;
+
     public static function checkExtensions(): void
     {
         if (! extension_loaded('openssl')) {
@@ -44,6 +50,11 @@ class WdesAdmin
     public static function init(array $config): void
     {
         self::checkExtensions();
+        self::$siteName = $config['siteName'];
+        unset($config['siteName']);// Everyone must use the getter
+
+        self::$secretKey = $config['secretKey'];
+        unset($config['secretKey']);// Nobody must access this
         $logger = new Logger($config['logFile']);
         $db = new Database($config);
         try {
@@ -55,7 +66,7 @@ class WdesAdmin
         }
         Session::init(
             $logger,
-            $config['secretKey'],
+            self::$secretKey,
             $config['sessionName']
         );
 
@@ -66,5 +77,33 @@ class WdesAdmin
     {
         Session::close();// Session depends on db
         Database::getInstance()->disconnect();
+    }
+
+    public static function cryptPassword(string $rawPassword): string
+    {
+        $securePassword = hash('sha256', $rawPassword);
+        $securityPassword = hash('sha512', $rawPassword);
+        // Encrypt the password using the hash of the password + the secret key as a key
+        // That should be hard enough to reverse in case of brute force attacks
+        return Security::encrypt($securePassword, $securityPassword . self::$secretKey);
+    }
+
+    public static function passwordMatch(string $cryptedPassword, string $rawPassword): bool
+    {
+
+        $supposedPasswordInSecure = hash('sha256', $rawPassword);
+        $securityPassword = hash('sha512', $rawPassword);
+
+        $storedPass = Security::decrypt($cryptedPassword, $securityPassword . self::$secretKey);
+
+        if ($storedPass === null) {
+            return false;
+        }
+        return hash_equals($storedPass, $supposedPasswordInSecure);
+    }
+
+    public static function getSiteName(): string
+    {
+        return self::$siteName;
     }
 }

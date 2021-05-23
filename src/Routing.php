@@ -15,15 +15,38 @@ namespace WdesAdmin;
 
 class Routing
 {
+    public const METHOD_GET = 'GET';
+    public const METHOD_POST = 'POST';
+
     public static function manage(string $route): void
     {
         $routes = require __DIR__ . DIRECTORY_SEPARATOR . 'routes.php';
-        $route = isset($routes[$route]) ? $route : '/404';
-        $routeData = $routes[$route];
+
+        $requestMethod = filter_input(
+            \INPUT_SERVER, 'REQUEST_METHOD', \FILTER_SANITIZE_SPECIAL_CHARS
+        );
+
+        $routeExists = isset($routes[$route]);
+
+        if (! $routeExists) {
+            $route = '/404';
+            $requestMethod = 'GET';
+        }
+
+        $routeMethodExists = isset($routes[$route][$requestMethod]);
+
+        if (! $routeMethodExists) {
+            $route = '/405';
+            $requestMethod = 'GET';
+        }
+
+        $routeData = $routes[$route][$requestMethod];
         /** @var AbstractController $controller */
         $controller = new $routeData[0]();
         if (! $controller->authorized()) {
-            header('Location: index.php?route=/login');
+            $response = new Response();
+            $response->addHeader('Location', 'index.php?route=/login');
+            $response->send();
             return;
         }
         /** @var Response $response */

@@ -18,21 +18,22 @@
                             <form class="user" action="<?php $this->route('/register'); ?>" method="POST">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" name="first_name" placeholder="First Name" value="<?php $this->value('first_name'); ?>">
+                                        <input type="text" class="form-control form-control-user" name="first_name" placeholder="First Name" value="<?php $this->value('first_name'); ?>" autocomplete="name">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" name="last_name" placeholder="Last Name" value="<?php $this->value('last_name'); ?>">
+                                        <input type="text" class="form-control form-control-user" name="last_name" placeholder="Last Name" value="<?php $this->value('last_name'); ?>"
+                                        autocomplete="family-name">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" name="username" placeholder="Username" value="<?php $this->value('username'); ?>">
+                                    <input type="text" class="form-control form-control-user" name="username" placeholder="Username" value="<?php $this->value('username'); ?>" autocomplete="nickname">
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user" name="password" placeholder="Password" value="<?php $this->value('password'); ?>">
+                                        <input type="password" class="form-control form-control-user" name="password" placeholder="Password" value="<?php $this->value('password'); ?>" autocomplete="new-password">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user" name="password_check" placeholder="Repeat Password" value="<?php $this->value('password_check'); ?>">
+                                        <input type="password" class="form-control form-control-user" name="password_check" placeholder="Repeat Password" value="<?php $this->value('password_check'); ?>"autocomplete="new-password">
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
