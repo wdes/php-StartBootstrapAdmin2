@@ -8,7 +8,6 @@ use WdesAdmin\Models\AdminUser;
 use WdesAdmin\AbstractController;
 use WdesAdmin\Flash;
 use WdesAdmin\Response;
-use WdesAdmin\Security;
 use WdesAdmin\Session;
 use WdesAdmin\Template;
 use WdesAdmin\WdesAdmin;
@@ -24,6 +23,7 @@ use WdesAdmin\WdesAdmin;
 
 class AuthController extends AbstractController
 {
+
     public function authorized(): bool
     {
         return true;
@@ -31,10 +31,13 @@ class AuthController extends AbstractController
 
     public function login(): Response
     {
-        $this->addHtml(Template::render('login', [
-            'username' => '',
-            'password' => '',
-        ]));
+        $this->addHtml(
+            Template::render('login', [
+                'username' => '',
+                'password' => '',
+                ]
+            )
+        );
         return $this->response;
     }
 
@@ -42,10 +45,13 @@ class AuthController extends AbstractController
     {
         Session::destroy();
         Flash::addMessage(Flash::LEVEL_INFO, 'Bye !');
-        $this->addHtml(Template::render('login', [
-            'username' => '',
-            'password' => '',
-        ]));
+        $this->addHtml(
+            Template::render('login', [
+                'username' => '',
+                'password' => '',
+                ]
+            )
+        );
         return $this->response;
     }
 
@@ -55,42 +61,41 @@ class AuthController extends AbstractController
         $username = $_POST['username'] ?? '';
 
         $user = AdminUser::findByUsername($username);
-        if (
-            $user !== null
-            && WdesAdmin::passwordMatch(
-                $user->getPassword(),
-                $password
-            )
-        ) {
+        if ($user !== null && WdesAdmin::passwordMatch($user->getPassword(), $password)) {
             Flash::addMessage(Flash::LEVEL_INFO, 'Welcome back !');
             Session::set('logged_in', true);
             Session::set('user', [
-                'username' => $user->getUsername(),
-                'first_name' => $user->getFirstName(),
-                'last_name' => $user->getLastName(),
-            ]);
+                    'username' => $user->getUsername(),
+                    'first_name' => $user->getFirstName(),
+                    'last_name' => $user->getLastName(),
+                ]
+            );
             $this->redirect('/');
             return $this->response;
         }
 
         Flash::addMessage(Flash::LEVEL_DANGER, 'Unable to validate your credentials !');
 
-        $this->addHtml(Template::render('login', [
-            'username' => $username,
-            'password' => $password,
-        ]));
+        $this->addHtml(
+            Template::render('login', [
+                'username' => $username,
+                'password' => $password,
+            ])
+        );
         return $this->response;
     }
 
     public function register(): Response
     {
-        $this->addHtml(Template::render('register', [
-            'first_name' => '',
-            'last_name' => '',
-            'username' => '',
-            'password' => '',
-            'password_check' => '',
-        ]));
+        $this->addHtml(
+            Template::render('register', [
+                'first_name' => '',
+                'last_name' => '',
+                'username' => '',
+                'password' => '',
+                'password_check' => '',
+            ])
+        );
         return $this->response;
     }
 
@@ -99,8 +104,8 @@ class AuthController extends AbstractController
         $password1 = $_POST['password'] ?? '';
         $password2 = $_POST['password_check'] ?? '';
         $firstName = $_POST['first_name'] ?? '';
-        $lastName = $_POST['last_name'] ?? '';
-        $username = $_POST['username'] ?? '';
+        $lastName  = $_POST['last_name'] ?? '';
+        $username  = $_POST['username'] ?? '';
 
         $invalid = false;
 
@@ -133,19 +138,20 @@ class AuthController extends AbstractController
         }
 
         if ($invalid) {
-            $this->addHtml(Template::render('register', [
-                'first_name' => $firstName,
-                'last_name' => $lastName,
-                'username' => $username,
-                'password' => $password1,
-                'password_check' => $password2,
-            ]));
+            $this->addHtml(
+                Template::render('register', [
+                    'first_name' => $firstName,
+                    'last_name' => $lastName,
+                    'username' => $username,
+                    'password' => $password1,
+                    'password_check' => $password2,
+                    ]
+                )
+            );
             return $this->response;
         }
 
-        if (
-            $password1 === $password2
-        ) {
+        if ($password1 === $password2) {
             $newUser = AdminUser::create(
                 $username,
                 $firstName === '' ? null : $firstName,
@@ -159,13 +165,17 @@ class AuthController extends AbstractController
             Flash::addMessage(Flash::LEVEL_DANGER, 'Unable to create the user !');
         }
 
-        $this->addHtml(Template::render('register', [
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-            'username' => $username,
-            'password' => $password1,
-            'password_check' => $password2,
-        ]));
+        $this->addHtml(
+            Template::render('register', [
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'username' => $username,
+                'password' => $password1,
+                'password_check' => $password2,
+                ]
+            )
+        );
         return $this->response;
     }
+
 }

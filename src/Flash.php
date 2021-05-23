@@ -17,9 +17,9 @@ class Flash
 {
 
     public const LEVEL_SUCCESS = 'success';
-    public const LEVEL_DANGER = 'danger';
+    public const LEVEL_DANGER  = 'danger';
     public const LEVEL_WARNING = 'warning';
-    public const LEVEL_INFO = 'info';
+    public const LEVEL_INFO    = 'info';
 
     private const SESSION_KEY = 'flash_messages';
 
@@ -38,9 +38,13 @@ class Flash
      */
     public static function addMessage(string $level, string $message): void
     {
-        Session::push(self::SESSION_KEY, [
+        Session::push(
+            self::SESSION_KEY,
+            [
             'level' => $level,
             'message' => $message
-        ]);
+            ]
+        );
     }
+
 }

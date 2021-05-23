@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace WdesAdmin;
 
-use stdClass;
-
 /**
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, version 2.0.
@@ -30,7 +28,7 @@ class Template
         }
 
         // define a closure with a scope for the variable extraction
-        $result = function(string $file, array $data = []): string {
+        $result = function (string $file, array $data = []): string {
             ob_start();
             try {
                 include $file;
@@ -44,4 +42,5 @@ class Template
         // call the closure
         return $result->call(new TemplateContext($data), $template, $data);
     }
+
 }

@@ -36,4 +36,5 @@ abstract class AbstractController
     {
         return Session::get('logged_in', false) === true;
     }
+
 }

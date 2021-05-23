@@ -1,4 +1,6 @@
-<?php $this->render('base-head'); ?>
+<?php
+
+$this->render('base-head'); ?>
 
 <body id="page-top" class="h-100">
 

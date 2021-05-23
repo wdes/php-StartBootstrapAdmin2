@@ -27,7 +27,7 @@ class Logger
 
     public function __construct(string $logFile)
     {
-       $this->logFile = $logFile;
+        $this->logFile = $logFile;
     }
 
     private function output(string $contents, bool $toStdErr): void

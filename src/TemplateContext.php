@@ -15,8 +15,10 @@ namespace WdesAdmin;
 
 class TemplateContext
 {
+    /** @var string */
     public $title = 'WdesAdmin';
 
+    /** @var array<string,mixed> */
     private $data = [];
 
     public function __construct(array $data)
@@ -36,7 +38,7 @@ class TemplateContext
 
     public function debugData(): void
     {
-        var_dump($this->data);
+        var_dump($this->data);// phpcs:ignore Squiz.PHP.DiscouragedFunctions.Found
     }
 
     public function secure(string $value): string
@@ -63,8 +65,8 @@ class TemplateContext
 
     public function getUserDisplayName(): string
     {
-        $user = Session::get('user', []);
-        $displayName = $user['first_name'] ?? '';
+        $user         = Session::get('user', []);
+        $displayName  = $user['first_name'] ?? '';
         $displayName .= ' ';
         $displayName .= $user['last_name'] ?? '';
         if (empty(trim($displayName, ' '))) {
@@ -78,4 +80,5 @@ class TemplateContext
     {
         return WdesAdmin::getSiteName();
     }
+
 }

@@ -19,9 +19,11 @@ use WdesAdmin\Template;
 
 class HomeController extends AbstractController
 {
+
     public function index(): Response
     {
         $this->addHtml(Template::render('index'));
         return $this->response;
     }
+
 }

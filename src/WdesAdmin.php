@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace WdesAdmin;
 
 use PDOException;
-use SessionHandler;
 
 /**
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -56,7 +55,7 @@ class WdesAdmin
         self::$secretKey = $config['secretKey'];
         unset($config['secretKey']);// Nobody must access this
         $logger = new Logger($config['logFile']);
-        $db = new Database($config);
+        $db     = new Database($config);
         try {
             $db->connect();
         } catch (PDOException $e) {
@@ -81,7 +80,7 @@ class WdesAdmin
 
     public static function cryptPassword(string $rawPassword): string
     {
-        $securePassword = hash('sha256', $rawPassword);
+        $securePassword   = hash('sha256', $rawPassword);
         $securityPassword = hash('sha512', $rawPassword);
         // Encrypt the password using the hash of the password + the secret key as a key
         // That should be hard enough to reverse in case of brute force attacks
@@ -90,9 +89,8 @@ class WdesAdmin
 
     public static function passwordMatch(string $cryptedPassword, string $rawPassword): bool
     {
-
         $supposedPasswordInSecure = hash('sha256', $rawPassword);
-        $securityPassword = hash('sha512', $rawPassword);
+        $securityPassword         = hash('sha512', $rawPassword);
 
         $storedPass = Security::decrypt($cryptedPassword, $securityPassword . self::$secretKey);
 
@@ -106,4 +104,5 @@ class WdesAdmin
     {
         return self::$siteName;
     }
+
 }

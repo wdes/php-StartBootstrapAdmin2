@@ -15,7 +15,7 @@ namespace WdesAdmin;
 
 class Routing
 {
-    public const METHOD_GET = 'GET';
+    public const METHOD_GET  = 'GET';
     public const METHOD_POST = 'POST';
 
     public static function manage(string $route): void
@@ -23,20 +23,22 @@ class Routing
         $routes = require __DIR__ . DIRECTORY_SEPARATOR . 'routes.php';
 
         $requestMethod = filter_input(
-            \INPUT_SERVER, 'REQUEST_METHOD', \FILTER_SANITIZE_SPECIAL_CHARS
+            \INPUT_SERVER,
+            'REQUEST_METHOD',
+            \FILTER_SANITIZE_SPECIAL_CHARS
         );
 
         $routeExists = isset($routes[$route]);
 
         if (! $routeExists) {
-            $route = '/404';
+            $route         = '/404';
             $requestMethod = 'GET';
         }
 
         $routeMethodExists = isset($routes[$route][$requestMethod]);
 
         if (! $routeMethodExists) {
-            $route = '/405';
+            $route         = '/405';
             $requestMethod = 'GET';
         }
 
@@ -53,4 +55,5 @@ class Routing
         $response = $controller->{$routeData[1]}();
         $response->send();
     }
+
 }

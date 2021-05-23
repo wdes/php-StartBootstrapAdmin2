@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 use WdesAdmin\WdesAdmin;
 
 // Load the class auto-loader

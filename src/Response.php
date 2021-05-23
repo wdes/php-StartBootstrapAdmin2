@@ -42,4 +42,5 @@ class Response
     {
         $this->headers[] = [$name, $contents];
     }
+
 }

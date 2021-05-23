@@ -19,6 +19,7 @@ use WdesAdmin\Template;
 
 class ErrorController extends AbstractController
 {
+
     public function authorized(): bool
     {
         return true;
@@ -35,4 +36,5 @@ class ErrorController extends AbstractController
         $this->addHtml(Template::render('405'));
         return $this->response;
     }
+
 }

@@ -32,7 +32,7 @@ class DbSessionHandler extends SessionHandler
 
     public function __construct(Logger $logger, string $key)
     {
-        $this->key = $key;
+        $this->key    = $key;
         $this->logger = $logger;
     }
 
@@ -54,8 +54,8 @@ class DbSessionHandler extends SessionHandler
     public function read($sessionId)
     {
         try {
-            $stmt = Database::getInstance()->query(
-                "SELECT session_data FROM `sessions` WHERE session_id = ? AND session_name = ?",
+            $stmt        = Database::getInstance()->query(
+                'SELECT session_data FROM `sessions` WHERE session_id = ? AND session_name = ?',
                 [
                     $sessionId,
                     $this->sessionName,
@@ -107,7 +107,7 @@ class DbSessionHandler extends SessionHandler
     {
         try {
             $stmt = Database::getInstance()->query(
-                "DELETE FROM `sessions` WHERE session_id = ? AND session_name = ?",
+                'DELETE FROM `sessions` WHERE session_id = ? AND session_name = ?',
                 [
                     $sessionId,
                     $this->sessionName,
@@ -130,7 +130,7 @@ class DbSessionHandler extends SessionHandler
     {
         try {
             $stmt = Database::getInstance()->query(
-                "DELETE FROM `sessions` WHERE `created_at` < (NOW() - ?)",
+                'DELETE FROM `sessions` WHERE `created_at` < (NOW() - ?)',
                 [
                     $maxlifetime
                 ]
@@ -152,4 +152,5 @@ class DbSessionHandler extends SessionHandler
     {
         return true;
     }
+
 }
