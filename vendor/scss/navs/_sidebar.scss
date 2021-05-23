@@ -100,8 +100,8 @@
 
         &::after {
             font-weight: 900;
-            content: '\f104';
-            font-family: 'Font Awesome 5 Free';
+            content: mdi('chevron-left');
+            font-family: '#{$mdi-font-name}';
             margin-right: 0.1rem;
         }
 
@@ -119,8 +119,8 @@
         overflow: hidden;
 
         #sidebarToggle::after {
-            content: '\f105';
-            font-family: 'Font Awesome 5 Free';
+            content: mdi('chevron-right');
+            font-family: '#{$mdi-font-name}';
             margin-left: 0.25rem;
         }
 
@@ -243,8 +243,8 @@
                         vertical-align: 0;
                         border: 0;
                         font-weight: 900;
-                        content: '\f107';
-                        font-family: 'Font Awesome 5 Free';
+                        content: mdi('chevron-down');
+                        font-family: '#{$mdi-font-name}';
                     }
 
                     &.collapsed::after {

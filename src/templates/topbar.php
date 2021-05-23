@@ -2,7 +2,7 @@
 
 <!-- Sidebar Toggle (Topbar) -->
 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-    <i class="fa fa-bars"></i>
+    <i class="mdi mdi-menu"></i>
 </button>
 
 <!-- Topbar Navbar -->
@@ -161,20 +161,20 @@
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
             aria-labelledby="userDropdown">
             <a class="dropdown-item" href="#">
-                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                <i class="mdi mdi-account mr-2 text-gray-400"></i>
                 Profile
             </a>
             <a class="dropdown-item" href="#">
-                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                <i class="fa-cogs mr-2 text-gray-400"></i>
                 Settings
             </a>
             <a class="dropdown-item" href="#">
-                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                <i class="fa-list mr-2 text-gray-400"></i>
                 Activity Log
             </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="<?php $this->route('/logout'); ?>">
-                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                <i class="fa-sign-out-alt mr-2 text-gray-400"></i>
                 Logout
             </a>
         </div>
