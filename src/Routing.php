@@ -22,6 +22,14 @@ class Routing
     {
         $routes = require __DIR__ . DIRECTORY_SEPARATOR . 'routes.php';
 
+        foreach (WdesAdmin::getModules() as $module) {
+            $moduleRoutes = $module->registerRoutes();
+            if ($moduleRoutes === null) {
+                continue;
+            }
+            $routes = array_merge($routes, $moduleRoutes);
+        }
+
         $requestMethod = filter_input(
             \INPUT_SERVER,
             'REQUEST_METHOD',

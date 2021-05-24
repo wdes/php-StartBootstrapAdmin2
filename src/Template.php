@@ -15,15 +15,44 @@ namespace WdesAdmin;
 
 class Template
 {
-
-    /**
-     * @var string template name in templates/ without .php at the end
-     */
     public static function render(string $template, array $data = []): string
     {
-        $template = __DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template . '.php';
+        $S = DIRECTORY_SEPARATOR;
+        $root = realpath(__DIR__ . $S . '..' . $S);
 
-        if (!is_file($template)) {
+        // @[profile]/templateName
+        // templateName
+        $isTemplateModule = stripos($template, '@[') === 0;
+
+        if ($isTemplateModule) {
+            $templateModuleFile = $root . $S . 'modules' . $S . '%s' . $S . 'templates' . $S . '%s.php';
+
+            $posEnd = strpos($template, ']/');
+            $moduleName = substr($template, 2, $posEnd - 2);// start after @[ and stop before ]/
+            $template = substr($template, $posEnd + 2);
+
+            $file = sprintf(
+                $templateModuleFile,
+                $moduleName,
+                $template
+            );
+            return self::renderFile($file, $data);
+        }
+
+        $templateFile = $root . $S . 'templates' . $S . '%s.php';
+        $file = sprintf(
+            $templateFile,
+            $template
+        );
+        return self::renderFile($file, $data);
+    }
+
+    /**
+     * @var string template file
+     */
+    public static function renderFile(string $template, array $data = []): string
+    {
+        if (! is_file($template)) {
             throw new \RuntimeException('Template not found: ' . $template);
         }
 
@@ -42,5 +71,4 @@ class Template
         // call the closure
         return $result->call(new TemplateContext($data), $template, $data);
     }
-
 }

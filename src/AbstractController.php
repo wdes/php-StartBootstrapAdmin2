@@ -15,6 +15,7 @@ namespace WdesAdmin;
 
 abstract class AbstractController
 {
+    /** @var Response */
     protected $response;
 
     public function __construct()
@@ -31,6 +32,18 @@ abstract class AbstractController
     {
         $this->response->addHeader('Location', 'index.php?route=' . $route);
     }
+
+    /**
+     * @var string template name in templates/ without .php at the end
+     */
+    public function render(string $template, array $data = []): string
+    {
+        return Template::render(
+            $template,
+            $data
+        );
+    }
+
 
     public function authorized(): bool
     {

@@ -31,9 +31,14 @@ class TemplateContext
         echo Template::render($template, $data);
     }
 
+    public function buildRoute(string $route): string
+    {
+        return 'index.php?route=' . $route;
+    }
+
     public function route(string $route): void
     {
-        echo 'index.php?route=' . $route;
+        echo $this->buildRoute($route);
     }
 
     public function debugData(): void
@@ -41,14 +46,14 @@ class TemplateContext
         var_dump($this->data);// phpcs:ignore Squiz.PHP.DiscouragedFunctions.Found
     }
 
-    public function secure(string $value): string
+    public function safe(string $value): string
     {
         return htmlspecialchars($value, ENT_COMPAT | ENT_HTML5);
     }
 
     public function value(string $key): void
     {
-        echo $this->secure($this->data[$key] ?? '');
+        echo $this->safe($this->data[$key] ?? '');
     }
 
     public function checked(string $key): void
@@ -79,6 +84,19 @@ class TemplateContext
     public function getSiteName(): string
     {
         return WdesAdmin::getSiteName();
+    }
+
+    public function getUserMenus(): array
+    {
+        $menusOut = [];
+        foreach (WdesAdmin::getModules() as $module) {
+            $menus = $module->registerUserMenu();
+            if ($menus === null) {
+                continue;
+            }
+            array_push($menusOut, ...$menus);
+        }
+        return $menusOut;
     }
 
 }

@@ -15,13 +15,13 @@
     <exclude-pattern>*/public/fonts/*</exclude-pattern>
     <rule ref="Wdes"></rule>
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing">
-        <exclude-pattern>*/src/templates/*</exclude-pattern>
+        <exclude-pattern>*/templates/*</exclude-pattern>
     </rule>
     <rule ref="Generic.Files.LineLength.TooLong">
-        <exclude-pattern>*/src/templates/*</exclude-pattern>
+        <exclude-pattern>*/templates/*</exclude-pattern>
     </rule>
     <rule ref="Internal.NoCodeFound">
-        <exclude-pattern>*/src/templates/*</exclude-pattern>
+        <exclude-pattern>*/templates/*</exclude-pattern>
     </rule>
     <rule ref="SlevomatCodingStandard.Functions.StaticClosure.ClosureNotStatic">
         <exclude-pattern>*/src/Template.php</exclude-pattern>

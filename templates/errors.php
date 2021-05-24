@@ -4,8 +4,8 @@
     foreach ($this->getFlashMessages() as $alert) {
         echo sprintf(
             '<div class="alert alert-%s" role="alert">%s</div>',
-            $this->secure($alert['level']),
-            $this->secure($alert['message'])
+            $this->safe($alert['level']),
+            $this->safe($alert['message'])
         );
     }
     ?>

@@ -26,28 +26,55 @@ class WdesAdmin
     /** @var string */
     private static $siteName;
 
+    private static $requiredPhpModules = [
+        'openssl',
+        'curl',
+        'session',
+        'hash',
+    ];
+
+    /** @var ModuleInterface[] */
+    private static $modules = [];
+
     public static function checkExtensions(): void
     {
-        if (! extension_loaded('openssl')) {
-            echo 'Missing openssl extension !';
-            exit(1);
+        foreach (self::$requiredPhpModules as $moduleName) {
+            if (! extension_loaded($moduleName)) {
+                echo 'Missing ' . $moduleName . ' extension !';
+                exit(1);
+            }
         }
-        if (! extension_loaded('curl')) {
-            echo 'Missing curl extension !';
-            exit(1);
-        }
-        if (! extension_loaded('session')) {
-            echo 'Missing session extension !';
-            exit(1);
-        }
-        if (! extension_loaded('hash')) {
-            echo 'Missing hash extension !';
-            exit(1);
-        }
+    }
+
+    /**
+     * The loaded modules
+     *
+     * @return ModuleInterface[]
+     */
+    public static function getModules(): array
+    {
+        return self::$modules;
     }
 
     public static function init(array $config): void
     {
+        /** @var string $moduleClass */
+        /** @var array<string,mixed> $moduleConfig */
+        foreach ($config['modules'] as $moduleClass => $moduleConfig) {
+            /** @var ModuleInterface $moduleObj */
+            $moduleObj = new $moduleClass();
+            if (! $moduleObj instanceof ModuleInterface) {
+                echo 'Module ' . $moduleClass . ' does not implement ModuleInterface !';
+                exit(1);
+            }
+            $moduleObj->loadConfig($moduleConfig);
+            $config['modules'][$moduleClass] = null;// Erase the data, it has been loaded
+            $requiredExtensions = $moduleObj->requiresPhpExtensions();
+            if ($requiredExtensions !== null && $requiredExtensions !== []) {
+                array_push(self::$requiredPhpModules, ...$requiredExtensions);
+            }
+            array_push(self::$modules, $moduleObj);
+        }
         self::checkExtensions();
         self::$siteName = $config['siteName'];
         unset($config['siteName']);// Everyone must use the getter

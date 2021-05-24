@@ -13,5 +13,5 @@ indent_style = tab
 [public/*.php]
 insert_final_newline = false
 
-[src/templates/*.php]
+[templates/*.php]
 insert_final_newline = false

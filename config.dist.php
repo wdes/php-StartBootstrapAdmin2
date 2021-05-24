@@ -9,6 +9,11 @@ return [
     'secretKey' => 'R*KhN9Z#kpzziVZXp^aiM3C9q86mEpYj3GsH8jr@HdViDxzM76DEq',// Fill this value with a long random string
     'sessionName' => 'admin-1',// Keep it simple, this allows easy multi sites on the same host
     'siteName' => 'WdesAdmin',// Will display on the left bar
+    'modules' => [// Register the modules
+        WdesAdminModule\profile\Profile::class => [// The config for the module
+            'test-config' => 'test-value',
+        ],
+    ],
     'database' => [
         'production' => [
             'adapter' => 'mysql',
