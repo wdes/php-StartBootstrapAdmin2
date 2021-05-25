@@ -81,7 +81,9 @@ class ProfileController extends AbstractController
             $user->setFirstName($firstName === '' ? null : $firstName);
             $user->setLastName($lastName === '' ? null : $lastName);
             if ($hasPassword) {
-                $user->setPassword($password1 === '' ? null : $password1);
+                $user->setPassword(
+                    WdesAdmin::cryptPassword($password1)
+                );
             }
             if ($user->hasChanges()) {
                 if ($user->update()) {
