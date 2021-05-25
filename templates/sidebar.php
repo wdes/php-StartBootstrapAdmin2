@@ -9,92 +9,78 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+        <a class="nav-link" href="<?php $this->route('/'); ?>">
+            <i class="mdi mdi-view-dashboard"></i>
             <span>Dashboard</span></a>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Interface
-    </div>
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Components</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Components:</h6>
-                <a class="collapse-item" href="buttons.html">Buttons</a>
-                <a class="collapse-item" href="cards.html">Cards</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Utilities</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Utilities:</h6>
-                <a class="collapse-item" href="utilities-color.html">Colors</a>
-                <a class="collapse-item" href="utilities-border.html">Borders</a>
-                <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                <a class="collapse-item" href="utilities-other.html">Other</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Addons
-    </div>
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item active">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Pages</span>
-        </a>
-        <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Login Screens:</h6>
-                <a class="collapse-item" href="login.html">Login</a>
-                <a class="collapse-item" href="register.html">Register</a>
-                <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                <div class="collapse-divider"></div>
-                <h6 class="collapse-header">Other Pages:</h6>
-                <a class="collapse-item" href="404.html">404 Page</a>
-                <a class="collapse-item active" href="blank.html">Blank Page</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Charts</span></a>
-    </li>
-
-    <!-- Nav Item - Tables -->
-    <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a>
-    </li>
+    <?php
+    foreach ($this->getSidebarMenus() as $menu) {
+        if ($menu['divider'] ?? false) {
+            echo <<<HTML
+            <hr class="sidebar-divider">
+HTML;
+            continue;
+        }
+        if ($menu['heading'] ?? false) {
+            $headingText = $this->safe($menu['heading'] ?? '?');
+            echo <<<HTML
+            <div class="sidebar-heading">{$headingText}</div>
+HTML;
+            continue;
+        }
+        if ($menu['collapse'] ?? false) {
+            $text = $this->safe($menu['collapse']['text'] ?? '?');
+            $icon = $this->safe($menu['collapse']['icon'] ?? '');
+            $uniqueId = time() . random_int(0, 15000);
+            $activeMode = false;
+            foreach ($menu['collapse']['childs'] as $menuChild) {
+                foreach ($menuChild['links'] as $link) {
+                    if ($this->equalsCurrentRoute($link['route'])) {
+                        $activeMode = true;
+                        break 2;// stops this foreach and it's parent
+                    }
+                }
+            }
+            $classActive = $activeMode ? 'active' : '';
+            $classCollapsed = $activeMode ? 'collapsed' : '';
+            $expanded = $activeMode ? 'true' : 'false';
+            echo <<<HTML
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item {$classActive}">
+                <a class="nav-link {$classCollapsed}" href="#" data-toggle="collapse" data-target="#collapse-{$uniqueId}" aria-expanded="{$expanded}" aria-controls="collapse-{$uniqueId}">
+                    <i class="{$icon}"></i>
+                    <span>{$text}</span>
+                </a>
+HTML;
+        foreach ($menu['collapse']['childs'] as $menuChild) {
+            $classShow = $activeMode ? 'show' : '';
+            $menuChildHeaderText = $this->safe($menuChild['header-text'] ?? '');
+            echo <<<HTML
+                <div id="collapse-{$uniqueId}" class="collapse {$classShow}" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">{$menuChildHeaderText}</h6>
+HTML;
+                    foreach ($menuChild['links'] as $link) {
+                        $text = $this->safe($link['text'] ?? '?');
+                        $route = $this->buildRoute($link['route'] ?? '');
+                        $activeClass = $this->equalsCurrentRoute($link['route']) ? 'active' : '';
+                        echo <<<HTML
+                        <a class="collapse-item {$activeClass}" href="{$route}">{$text}</a>
+HTML;
+                    }
+echo <<<HTML
+                    </div>
+                </div>
+HTML;
+        }
+echo <<<HTML
+        </li>
+HTML;
+        }
+    }
+    ?>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

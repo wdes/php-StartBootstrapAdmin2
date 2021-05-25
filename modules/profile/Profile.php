@@ -55,7 +55,56 @@ class Profile extends AbstractModule implements ModuleInterface
 
     public function registerSidebar(): ?array
     {
-        return null;
+        return [
+            [
+                'heading' => 'Collapse 1-2',
+            ],
+            [
+                'collapse' => [
+                    'text' => 'Collapse 1',
+                    'icon' => 'mdi mdi-account',
+                    'childs' => [
+                        [
+                            'header-text' => 'Header 1',
+                            'links' => [
+                                [
+                                    'route' => '/user/profile',
+                                    'text' => 'Profile',
+                                ],
+                                [
+                                    'route' => '/example-2',
+                                    'text' => 'Example 2',
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            [
+                'divider' => true,
+            ],
+            [
+                'collapse' => [
+                    'text' => 'Collapse 2',
+                    'icon' => 'mdi mdi-desktop-mac-dashboard',
+                    'childs' => [
+                        [
+                            'header-text' => 'Header 2',
+                            'links' => [
+                                [
+                                    'route' => '/example-3',
+                                    'text' => 'Example 3',
+                                ],
+                                [
+                                    'route' => '/example-4',
+                                    'text' => 'Example 2',
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+        ];
     }
 
     public function registerTopbar(): ?array

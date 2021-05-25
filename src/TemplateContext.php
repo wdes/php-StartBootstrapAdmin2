@@ -89,6 +89,11 @@ class TemplateContext
         return WdesAdmin::getSiteName();
     }
 
+    public function equalsCurrentRoute(string $route): bool
+    {
+        return $_GET['route'] === $route;
+    }
+
     public function getUserMenus(): array
     {
         $menusOut = [];
@@ -102,4 +107,16 @@ class TemplateContext
         return $menusOut;
     }
 
+    public function getSidebarMenus(): array
+    {
+        $menusOut = [];
+        foreach (WdesAdmin::getModules() as $module) {
+            $menus = $module->registerSidebar();
+            if ($menus === null) {
+                continue;
+            }
+            array_push($menusOut, ...$menus);
+        }
+        return $menusOut;
+    }
 }
