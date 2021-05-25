@@ -1,0 +1,4 @@
+root = false
+
+[**/templates/*.php]
+insert_final_newline = false

@@ -68,6 +68,9 @@ class TemplateContext
         return $messages;
     }
 
+    /**
+     * @todo move logic to keep in sync with the Session::set code
+     */
     public function getUserDisplayName(): string
     {
         $user         = Session::get('user', []);

@@ -52,6 +52,22 @@ class AdminUser extends AbstractModel
         return $this->data['username'];
     }
 
+
+    public function setFirstName(?string $firstName): void
+    {
+        $this->set('first_name', $firstName);
+    }
+
+    public function setLastName(?string $lastName): void
+    {
+        $this->set('last_name', $lastName);
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->set('password', $password);
+    }
+
     public function getFirstName(): ?string
     {
         return $this->data['first_name'];

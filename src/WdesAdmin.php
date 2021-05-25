@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace WdesAdmin;
 
 use PDOException;
+use WdesAdmin\Models\AdminUser;
 
 /**
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -132,4 +133,10 @@ class WdesAdmin
         return self::$siteName;
     }
 
+    public static function getCurrentUser(): AdminUser
+    {
+        /** @var AdminUser $user */
+        $user = AdminUser::findByUsername(Session::get('user')['username']);
+        return $user;
+    }
 }

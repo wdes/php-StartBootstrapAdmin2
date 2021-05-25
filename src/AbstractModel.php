@@ -70,6 +70,11 @@ abstract class AbstractModel
         return $this->data[$key] ?? null;
     }
 
+    public function hasChanges(): bool
+    {
+        return count($this->keysToModify) > 0;
+    }
+
     public function save(): bool
     {
         $keys               = implode(', ', $this->getKeys());
@@ -262,7 +267,7 @@ abstract class AbstractModel
 
     public function update(): bool
     {
-        if (count($this->keysToModify) === 0) {
+        if (! $this->hasChanges()) {
             return false;
         }
 
@@ -412,6 +417,10 @@ abstract class AbstractModel
      */
     protected function set($key, $value): void
     {
+        if ($this->data[$key] === $value) {
+            return;// No changes to apply
+        }
+
         $this->data[$key]         = $value;
         $this->keysToModify[$key] = true;
     }

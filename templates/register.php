@@ -18,7 +18,7 @@
                             <form class="user" action="<?php $this->route('/register'); ?>" method="POST">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" name="first_name" placeholder="First Name" value="<?php $this->value('first_name'); ?>" autocomplete="name">
+                                        <input type="text" class="form-control form-control-user" name="first_name" placeholder="First Name" value="<?php $this->value('first_name'); ?>" autocomplete="given-name">
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" name="last_name" placeholder="Last Name" value="<?php $this->value('last_name'); ?>"

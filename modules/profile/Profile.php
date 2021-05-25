@@ -34,6 +34,7 @@ class Profile extends AbstractModule implements ModuleInterface
         return [
             '/user/profile' => [
                 Routing::METHOD_GET => [ProfileController::class, 'profile'],
+                Routing::METHOD_POST => [ProfileController::class, 'updateProfile'],
             ],
         ];
     }
