@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace WdesAdminModule\profile;
 
 use WdesAdmin\AbstractModule;
+use WdesAdmin\Models\AdminUser;
 use WdesAdmin\ModuleInterface;
 use WdesAdmin\Routing;
 use WdesAdminModule\profile\Controllers\ProfileController;
@@ -104,6 +105,22 @@ class Profile extends AbstractModule implements ModuleInterface
                     ]
                 ]
             ],
+        ];
+    }
+
+    public function registerDashboard(): ?array
+    {
+        $nbrUsers = AdminUser::count();
+        return [
+            'cards' => [
+                [
+                    'icon' => 'mdi mdi-account mdi-36px',
+                    'color' => 'primary',
+                    'text' => 'Users',
+                    'text-color' => 'info',
+                    'value' => $nbrUsers,
+                ]
+            ]
         ];
     }
 

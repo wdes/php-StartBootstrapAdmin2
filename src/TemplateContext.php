@@ -119,4 +119,17 @@ class TemplateContext
         }
         return $menusOut;
     }
+
+    public function getDashboardItems(): array
+    {
+        $items = [];
+        foreach (WdesAdmin::getModules() as $module) {
+            $items = $module->registerDashboard();
+            if ($items === null) {
+                continue;
+            }
+            array_push($items, $items);
+        }
+        return $items;
+    }
 }

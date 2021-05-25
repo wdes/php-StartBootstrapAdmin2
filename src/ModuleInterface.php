@@ -61,6 +61,13 @@ interface ModuleInterface
     public function registerTopbar(): ?array;
 
     /**
+     * Register items for the dashboard
+     *
+     * @return array[]|null
+     */
+    public function registerDashboard(): ?array;
+
+    /**
      * Says what php extensions the module requires
      *
      * @return string[]|null
