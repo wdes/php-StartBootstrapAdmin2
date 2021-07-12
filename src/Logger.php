@@ -11,9 +11,7 @@ namespace WdesAdmin;
  * You can obtain one at https://mozilla.org/MPL/2.0/.
  * @license MPL-2.0 https://mozilla.org/MPL/2.0/
  * @source https://github.com/wdes/php-StartBootstrapAdmin2
- */
-
-/**
+ *
  * It implements the PSR-3 logger interface
  * @source https://www.php-fig.org/psr/psr-3/
  */
@@ -37,7 +35,7 @@ class Logger
                 fwrite(STDERR, $contents);
                 return;
             }
-            echo $contents;
+            fwrite(STDOUT, $contents);
             return;
         }
 
@@ -75,7 +73,7 @@ class Logger
      */
     public function alert($message, array $context = [])
     {
-        $this->output('[ALERT] ' . $message . PHP_EOL, true);
+        $this->output('[' . date('c') . '][ALERT] ' . $message . PHP_EOL, true);
     }
 
     /**
@@ -89,7 +87,7 @@ class Logger
      */
     public function critical($message, array $context = [])
     {
-        $this->output('[CRITICAL] ' . $message . PHP_EOL, true);
+        $this->output('[' . date('c') . '][CRITICAL] ' . $message . PHP_EOL, true);
     }
 
     /**
@@ -102,7 +100,7 @@ class Logger
      */
     public function error($message, array $context = [])
     {
-        $this->output('[ERROR] ' . $message . PHP_EOL, true);
+        $this->output('[' . date('c') . '][ERROR] ' . $message . PHP_EOL, true);
     }
 
     /**
@@ -117,7 +115,7 @@ class Logger
      */
     public function warning($message, array $context = [])
     {
-        $this->output('[WARNING] ' . $message . PHP_EOL, false);
+        $this->log('WARNING', $message);
     }
 
     /**
@@ -129,7 +127,7 @@ class Logger
      */
     public function notice($message, array $context = [])
     {
-        $this->output('[NOTICE] ' . $message . PHP_EOL, false);
+        $this->log('NOTICE', $message);
     }
 
     /**
@@ -143,7 +141,7 @@ class Logger
      */
     public function info($message, array $context = [])
     {
-        $this->output('[INFO] ' . $message . PHP_EOL, false);
+        $this->log('INFO', $message);
     }
 
     /**
@@ -155,7 +153,7 @@ class Logger
      */
     public function debug($message, array $context = [])
     {
-        $this->output('[DEBUG] ' . $message . PHP_EOL, false);
+        $this->log('DEBUG', $message);
     }
 
     /**
@@ -168,7 +166,7 @@ class Logger
      */
     public function log($level, $message, array $context = [])
     {
-        $this->output('[' . $level . '] ' . $message . PHP_EOL, false);
+        $this->output('[' . date('c') . '][' . $level . '] ' . $message . PHP_EOL, false);
     }
 
 }
