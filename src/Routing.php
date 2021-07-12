@@ -30,11 +30,9 @@ class Routing
             $routes = array_merge($routes, $moduleRoutes);
         }
 
-        $requestMethod = filter_input(
-            \INPUT_SERVER,
-            'REQUEST_METHOD',
-            \FILTER_SANITIZE_SPECIAL_CHARS
-        );
+        // filter input method does not work on all hosting providers
+        // Method can not exist for obscure reasons on Apache, see: https://github.com/phpmyadmin/phpmyadmin/issues/16991
+        $requestMethod = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
 
         $routeExists = isset($routes[$route]);
 
