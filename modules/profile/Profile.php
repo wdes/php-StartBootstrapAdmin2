@@ -131,9 +131,7 @@ class Profile extends AbstractModule implements ModuleInterface
 
     public function requiresPhpExtensions(): ?array
     {
-        return [
-            'ldap'
-        ];
+        return null;
     }
 
 }
